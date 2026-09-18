@@ -1,0 +1,115 @@
+```
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一封贺卡</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+        body{
+            height:100vh;
+            background:#1a1a2e;
+            overflow:hidden;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .mask{
+            position:fixed;
+            inset:0;
+            background:#1a1a2e;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-size:20px;
+            z-index:99;
+        }
+        .card{
+            width:90%;
+            max-width:420px;
+            background:#fff;
+            border-radius:16px;
+            padding:40px 30px;
+            text-align:center;
+            box-shadow: 0 0 30px #ffc0cb77;
+            opacity:0;
+            transform: translateY(30px);
+        }
+        @keyframes fadeIn{
+            to{opacity:1;transform: translateY(0);}
+        }
+        h2{
+            color:#c84b78;
+            margin-bottom:20px;
+        }
+        p{
+            font-size:17px;
+            color:#444;
+            line-height:1.8;
+        }
+        .tip{
+            margin-top:25px;
+            font-size:14px;
+            color:#999;
+        }
+        .heart{
+            position:absolute;
+            color:#ff6b8b;
+            font-size:24px;
+            animation: fall 6s linear infinite;
+            pointer-events:none;
+        }
+        @keyframes fall{
+            0%{transform:translateY(-50px) rotate(0deg);opacity:1;}
+            100%{transform:translateY(100vh) rotate(360deg);opacity:0;}
+        }
+    </style>
+</head>
+<body>
+    <div class="mask" id="mask">点击屏幕，开启贺卡</div>
+
+    <div class="card" id="card">
+        <h2>✨ 致我的朋友 ✨</h2>
+        <p>
+            这里写你想对朋友说的话<br>
+            可以写短句，表白、祝福、整活都行
+        </p>
+        <div class="tip">愿你天天开心</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    
+
+    <script>
+        const mask = document.getElementById("mask");
+        const card = document.getElementById("card");
+        const audio = document.getElementById("bgMusic");
+
+        mask.addEventListener("click",()=>{
+            mask.style.display = "none";
+            card.style.animation = "fadeIn 1.5s forwards";
+            audio.currentTime = 210; // 修改这里，单位秒！例：2分10秒=130
+            audio.play();
+            startHeart();
+        })
+
+        function startHeart(){
+            function createHeart(){
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerText = "❤";
+                heart.style.left = Math.random()*100 + "vw";
+                heart.style.animationDuration = (Math.random()*3 +4)+"s";
+                document.body.appendChild(heart);
+                setTimeout(()=>heart.remove(),6000);
+            }
+            setInterval(createHeart,300);
+        }
+    </script>
+</body>
+</html>
+
+```
